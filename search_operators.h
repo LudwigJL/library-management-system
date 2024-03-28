@@ -17,8 +17,9 @@ void searchCollection(){
         cout << "4. Browse All Books" << endl;
         cout << "r. Return to Main menu" << endl;
 
+        
         cin >> searchChoice;
-
+        
         switch (searchChoice){
             case '1':
             cout << "Book's Title: ";

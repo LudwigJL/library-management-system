@@ -15,15 +15,9 @@ void removeSpaces(string& str) {
     str.erase(remove_if(str.begin(), str.end(), ::isspace), str.end());
 }
 
+//Checked
 void addMember(sqlite3* db) {
-    int qstate = 0;
-    qstate = sqlite3_open("FOR-SQLITE/mydb.db", &db);
-
-    if (qstate != SQLITE_OK) {
-        cerr << "Error opening database: " << sqlite3_errmsg(db) << endl;
-        return;
-    }
-
+    int data = 0;
     string name;
     string address;
     string phone;
@@ -47,19 +41,35 @@ void addMember(sqlite3* db) {
     toLowercase(email);
     removeSpaces(email);
 
-    string insertQuery1 = "INSERT INTO Members (name, address, phone, email) VALUES ('" + name + "', '" + address + "', '" + phone + "', '" + email + "')";
-    const char* q = insertQuery1.c_str();
+    data = sqlite3_open("FOR-SQLITE/mydb.db", &db);
+    if (data != SQLITE_OK) {
+        cerr << "Error opening database: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
 
-    qstate = sqlite3_exec(db, q, 0, 0, 0);
+    sqlite3_stmt *stmt;
+    const char* insertQuery = "INSERT INTO Members (name, address, phone, email) VALUES (?, ?, ?, ?)";
+    int qstate = sqlite3_prepare_v2(db, insertQuery, -1, &stmt, 0);
 
     if (qstate != SQLITE_OK) {
+        cerr << "Error preparing statement: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_text(stmt, 1, name.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, address.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, phone.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 4, email.c_str(), -1, SQLITE_STATIC);
+
+    qstate = sqlite3_step(stmt);
+    if (qstate != SQLITE_DONE) {
         cerr << "Error inserting data: " << sqlite3_errmsg(db) << endl;
     } else {
         cout << "New Member Successfully Created" << endl;
     }
 
+    sqlite3_finalize(stmt); 
     sqlite3_close(db);
-
 }
 
 void borrowBook(sqlite3* db) {
@@ -139,7 +149,7 @@ void returnBook(sqlite3* db) {
     if (qstate != SQLITE_OK) {
         cerr << "Error updating borrowed_id for Member: " << sqlite3_errmsg(db) << endl;
     } else {
-        cout << "" << endl;
+        cout << "Book sucessfully returned!" << endl;
     }
 
     sqlite3_close(db);
