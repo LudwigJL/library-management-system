@@ -28,7 +28,7 @@ void showMainMenu() {
 void returnBook(sqlite3* db) {
     int qstate = 0;
     qstate = sqlite3_open("FOR-SQLITE/mydb.db", &db);
-    
+
     string book_id;
     string member_id;
     string newStatus = "available";
