@@ -19,6 +19,11 @@ void addMember(sqlite3* db) {
     int qstate = 0;
     qstate = sqlite3_open("FOR-SQLITE/mydb.db", &db);
 
+    if (qstate != SQLITE_OK) {
+        cerr << "Error opening database: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
     string name;
     string address;
     string phone;
@@ -29,10 +34,10 @@ void addMember(sqlite3* db) {
     cout << "Name: ";
     getline(cin, name);
 
-    cout << "Address: ";
+    cout << "Adress: ";
     getline(cin, address);
 
-    cout << "Swedish Phone number (+46): ";
+    cout << "Swedish Phone Number (+46): ";
     getline(cin, phone);
 
     cout << "Personal E-mail: ";
@@ -48,7 +53,7 @@ void addMember(sqlite3* db) {
     qstate = sqlite3_exec(db, q, 0, 0, 0);
 
     if (qstate != SQLITE_OK) {
-        cerr << "Error inserting data into table: " << sqlite3_errmsg(db) << endl;
+        cerr << "Error inserting data: " << sqlite3_errmsg(db) << endl;
     } else {
         cout << "New Member Successfully Created" << endl;
     }

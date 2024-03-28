@@ -1,1 +1,1 @@
-SELECT book_id, title, author, publication, genre, status FROM Books WHERE
+select * from Members

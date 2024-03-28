@@ -13,13 +13,7 @@ void showMainMenu() {
     cout << "1. Borrow Book" << endl;
     cout << "2. Return Book" << endl;
     cout << "3. Register New Member" << endl;
-
     cout << "4. Search Book, Author or Genre" << endl;
-    cout << "5. Search through the library's collection." << endl;
-
-    cout << "8. Show All Members" << endl;
-    cout << "9. Show All Books" << endl;
-    cout << "q. Exit" << endl;
 
     cout << "Enter your choice: ";
     }
@@ -35,7 +29,7 @@ int main() {
         showMainMenu();
 
         cin >> choice;
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cin.ignore();
 
         switch (choice)
         {  
