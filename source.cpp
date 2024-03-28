@@ -25,45 +25,6 @@ void showMainMenu() {
     cout << "Enter your choice: ";
     }
 
-void returnBook(sqlite3* db) {
-    int qstate = 0;
-    qstate = sqlite3_open("FOR-SQLITE/mydb.db", &db);
-
-    string book_id;
-    string member_id;
-    string newStatus = "available";
-
-    cout << "Book id: ";
-    cin >> book_id;
-
-    cout << "Member id: ";
-    cin >> member_id;
-
-    string updateBookStatusQuery = "UPDATE Books SET status = '" + newStatus + "', borrower_id = NULL WHERE book_id = " + book_id + ";";
-    string updateMemberBorrowed = "UPDATE Members SET borrowed_id = NULL WHERE member_id = '" + member_id + "';";
-
-    const char* q = updateBookStatusQuery.c_str();
-    const char* r = updateMemberBorrowed.c_str();
-
-    qstate = sqlite3_exec(db, q, 0, 0, 0);
-
-    if (qstate != SQLITE_OK) {
-        cerr << "Error updating book status and borrower ID: " << sqlite3_errmsg(db) << endl;
-    } else {
-        cout << "Book Successfully returned!" << endl;
-    }
-
-    qstate = sqlite3_exec(db, r, 0, 0, 0);
-
-    if (qstate != SQLITE_OK) {
-        cerr << "Error updating borrowed_id for Member: " << sqlite3_errmsg(db) << endl;
-    } else {
-        cout << "" << endl;
-    }
-
-    sqlite3_close(db);
-    }
-
 int main() {
     sqlite3 *db;
     char choice;

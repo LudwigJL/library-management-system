@@ -5,6 +5,7 @@
 #include <string>
 #include <sqlite3.h> 
 
+using namespace std;
 
 void showAllBooks(sqlite3* db) {
     int rc = sqlite3_open("FOR-SQLITE/mydb.db", &db);
