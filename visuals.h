@@ -7,13 +7,25 @@
 
 using namespace std;
 
-void showAllBooks(sqlite3* db) {
+void showAllBooks(string title, string endstring) {
+    
+    sqlite3 *db;
     int rc = sqlite3_open("FOR-SQLITE/mydb.db", &db);
-    const char* query = "SELECT book_id, title, author, publication, genre, status FROM Books";
+    
+    const char* query;
+    if (!endstring.empty()) {
+        query = sqlite3_mprintf("SELECT book_id, title, author, publication, genre, status FROM Books WHERE %s", endstring.c_str());
+    } else {
+        query = sqlite3_mprintf("SELECT book_id, title, author, publication, genre, status FROM Books");
+    }
+
 
     sqlite3_stmt *stmt;
     rc = sqlite3_prepare_v2(db, query, -1, &stmt, NULL);
     if (rc == SQLITE_OK) {
+        if (!title.empty()) {
+            rc = sqlite3_bind_text(stmt, 1, title.c_str(), -1, SQLITE_STATIC);
+        }
 
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             int book_id = sqlite3_column_int(stmt, 0);
@@ -36,7 +48,7 @@ void showAllBooks(sqlite3* db) {
         cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
     }
 
+    sqlite3_free((void*)query);
     sqlite3_close(db);
-
 }
 #endif
