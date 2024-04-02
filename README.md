@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-The Library Management System is designed with a local SQLite database for efficient and scalable operation. This system provides various functionalities including:
+This Library Management System is designed with a local SQLite database for efficient and scalable operations. This system provides various functionalities including:
 - Adding library members
 - Borrowing and returning books
 - Browsing books in the library by genre, author, or title
