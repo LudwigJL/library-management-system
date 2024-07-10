@@ -12,4 +12,4 @@ The primary aim of this project is to create a user-friendly system tailored for
 
 ### Database Structure
 
-The SQLite database consists of two main tables: `Books` and `Members`. Each table has a primary key (`book_id` and `member_id`, respectively) which uniquely identifies a specific item. These tables are connected to track which `member_id` has borrowed a specific `book_id`, and vice versa. This structure enables the system to keep track of who currently has a specific book and when it will be available in the future.
+The SQLite database consists of two main tables: `Books` and `Members`. Each table has a primary key (`book_id` and `member_id`, respectively) which uniquely identifies a specific item. These tables are connected to track which `member_id` has borrowed a specific `book_id`. This structure enables the system to keep track of who currently has a specific book and when it will be available in the future.
